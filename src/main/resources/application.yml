@@ -1,0 +1,16 @@
+micronaut:
+  application:
+    name: wishlist-graphql-api
+
+graphql:
+  graphiql:
+    enabled: true
+    version: 0.13.2
+    page-title: Wishlist GraphiQL App
+
+mongodb:
+  uri: ${MONGODB_DATASOURCE_URI}
+  options:
+    maxConnectionIdleTime: 10000
+    readConcern: majority
+

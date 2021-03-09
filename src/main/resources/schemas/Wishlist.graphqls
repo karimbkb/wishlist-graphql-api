@@ -1,0 +1,44 @@
+type WishlistItem {
+    id: ID
+    sku: String
+    name: String
+    image: String
+    brand: String
+    urlPath: String
+    price: String
+    specialPrice: String
+    isSaleable: Boolean
+}
+
+input WishlistItemInput {
+    customerId: String!
+    sku: String!
+    locale: String!
+}
+
+type WishlistCollection {
+    items: [WishlistItem]!
+    count: Int
+}
+
+input WishlistCollectionInput {
+    customerId: String!
+    locale: String!
+    offset: Int!
+    limit: Int!
+}
+
+input WishlistProductCountInput {
+    customerId: String!
+    locale: String!
+}
+
+type Query {
+}
+
+type Mutation {
+    addProductToWishlist(input: WishlistItemInput!): WishlistItem
+    removeProductFromWishlist(input: WishlistItemInput!): WishlistItem
+    fetchProducts(input: WishlistCollectionInput!): WishlistCollection
+}
+
