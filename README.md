@@ -1,6 +1,7 @@
 # Wishlist Api Function
 >  This app is responsible for the wishlist crud operations 
 
+[![codecov](https://codecov.io/gh/karimbkb/wishlist-graphql-api/branch/master/graph/badge.svg?token=tprxgsRDGg)](https://codecov.io/gh/karimbkb/wishlist-graphql-api)
 [![made-with-Micronaut](https://img.shields.io/badge/Made%20with-Micronaut2.3.1-1f425f.svg)](https://micronaut.io/)
 [![made-with-Commercetools](https://img.shields.io/badge/Made%20with-GraphQL1.3.0-1f425f.svg)](https://commercetools.com/)
 
