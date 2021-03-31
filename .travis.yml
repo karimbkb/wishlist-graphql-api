@@ -1,0 +1,30 @@
+#
+#  * GITHUB_TOKEN
+#  * CODECOV
+
+sudo: required
+language: java
+
+os: linux
+dist: trusty
+jdk: oraclejdk11
+
+services:
+  - docker
+
+before_cache:
+  - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
+  - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+script:
+  - git clone https://${GITHUB_TOKEN}:x-oauth-basic@github.com/wishlist-graphql-api.git
+  - cd wishlist-graphql-api
+  - ./gradlew build
+
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
