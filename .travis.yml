@@ -22,7 +22,7 @@ cache:
     - $HOME/.gradle/wrapper/
 
 script:
-  - git clone https://${GITHUB_TOKEN}:x-oauth-basic@github.com/wishlist-graphql-api.git
+  - git clone https://github.com/karimbkb/wishlist-graphql-api.git
   - cd wishlist-graphql-api
   - ./gradlew build
 
