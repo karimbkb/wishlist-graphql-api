@@ -9,6 +9,10 @@ import lombok.Getter;
 @Prototype
 @Builder
 public class WishlistCollection {
-  private final List<WishlistProduct> items;
+  private final String wishlistId;
+  private final String customerId;
+  private final String locale;
+  private final String createdAt;
   private final int count;
+  private final List<WishlistProduct> items;
 }

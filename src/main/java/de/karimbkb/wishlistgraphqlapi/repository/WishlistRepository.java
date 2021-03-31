@@ -11,6 +11,7 @@ import de.karimbkb.wishlistgraphqlapi.dto.WishlistProduct;
 import io.micronaut.context.annotation.Prototype;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -29,10 +30,27 @@ public class WishlistRepository {
     this.wishlistProductRepository = wishlistProductRepository;
   }
 
-  public Wishlist loadWishlist(@Valid Customer customer, String locale) {
+  public Wishlist loadWishlist(@Valid Customer customer, Locale locale) {
+    //    DBObject lookupOperation = new BasicDBObject(
+    //            "$lookup", new BasicDBObject("from", "places")
+    //            .append("localField", "address.location.place._id")
+    //            .append("foreignField", "_id")
+    //            .append("as", "address.location.place")
+    //    );
+    //
+    //    Aggregation agg = newAggregation(
+    //            unwind("address"),
+    //            unwind("address.location"),
+    //            lookupOperation
+    //    );
+    //
+    //    AggregationResults<OutputDocument> aggResults = mongoTemplate.aggregate(
+    //            agg, PersonAddressDocument.class, OutputDocument.class
+    //    );
+
     Wishlist wishlist =
         getWishlistCollection()
-            .find(and(eq("customerId", customer.getId()), eq("locale", locale)))
+            .find(and(eq("customerId", customer.getId()), eq("locale", locale.toLanguageTag())))
             .limit(1)
             .first();
 

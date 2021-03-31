@@ -36,9 +36,13 @@ public class FetchProducts {
   public WishlistCollection execute(@NotNull final String customerId, @NotNull final Locale locale)
       throws InterruptedException {
     final Customer customer = customerApi.loadCustomer(customerId);
-    final Wishlist wishlist = wishlistRepository.loadWishlist(customer, locale.toLanguageTag());
+    final Wishlist wishlist = wishlistRepository.loadWishlist(customer, locale);
 
     return WishlistCollection.builder()
+        .wishlistId(wishlist.getId())
+        .customerId(wishlist.getCustomerId())
+        .locale(wishlist.getLocale())
+        .createdAt(wishlist.getCreatedAt())
         .items(
             wishlist == null || wishlist.getProducts() == null ? List.of() : wishlist.getProducts())
         .count(

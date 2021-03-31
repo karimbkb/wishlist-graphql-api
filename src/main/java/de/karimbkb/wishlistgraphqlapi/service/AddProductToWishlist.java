@@ -50,7 +50,7 @@ public class AddProductToWishlist {
       throws InterruptedException {
     final Customer customer = customerApi.loadCustomer(customerId);
 
-    Optional.ofNullable(wishlistRepository.loadWishlist(customer, locale.toLanguageTag()))
+    Optional.ofNullable(wishlistRepository.loadWishlist(customer, locale))
         .ifPresentOrElse(
             wishlist -> {
               if (wishlist.getProducts() != null) {

@@ -49,7 +49,7 @@ public class RemoveProductFromWishlist {
       @NotNull final Locale locale) {
     final Customer customer = customerApi.loadCustomer(customerId);
 
-    Optional.ofNullable(wishlistRepository.loadWishlist(customer, locale.toLanguageTag()))
+    Optional.ofNullable(wishlistRepository.loadWishlist(customer, locale))
         .ifPresentOrElse(
             wishlist -> {
               WishlistProduct wishlistProductToRemove = null;
