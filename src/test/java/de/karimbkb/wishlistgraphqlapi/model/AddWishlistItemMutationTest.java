@@ -91,7 +91,7 @@ class AddWishlistItemMutationTest extends Mocks implements TestPropertyProvider 
   }
 
   @Test
-  void addWishlistItemMuation() throws Exception {
+  void addWishlistItemMutation() throws Exception {
     LinkedHashMap<String, String> data = getRequestData();
 
     Map<String, Object> map = new HashMap<>();
@@ -113,11 +113,11 @@ class AddWishlistItemMutationTest extends Mocks implements TestPropertyProvider 
 
     WishlistCollection wishlistCollection = addWishlistItemMutation.get(dataFetchingEnvironment);
 
-    assertNotEquals(wishlistCollection.getWishlistId(), "");
-    assertEquals(wishlistCollection.getCustomerId(), data.get("customerId"));
-    assertEquals(wishlistCollection.getLocale(), data.get("locale"));
-    assertNotEquals(wishlistCollection.getCreatedAt(), "");
-    assertEquals(wishlistCollection.getItems().size(), 1);
+    assertNotEquals("", wishlistCollection.getWishlistId());
+    assertEquals(data.get("customerId"), wishlistCollection.getCustomerId());
+    assertEquals(data.get("locale"), wishlistCollection.getLocale());
+    assertNotEquals("", wishlistCollection.getCreatedAt());
+    assertEquals(1, wishlistCollection.getItems().size());
     assertEquals(wishlistCollection.getItems().get(0).getSku(), data.get("sku"));
   }
 

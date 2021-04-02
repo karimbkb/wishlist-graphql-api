@@ -46,8 +46,7 @@ public class AddProductToWishlist {
   public void execute(
       @NotNull final Product product,
       @NotNull final String customerId,
-      @NotNull final Locale locale)
-      throws InterruptedException {
+      @NotNull final Locale locale) {
     final Customer customer = customerApi.loadCustomer(customerId);
 
     Optional.ofNullable(wishlistRepository.loadWishlist(customer, locale))

@@ -1,69 +1,57 @@
 package de.karimbkb.wishlistgraphqlapi.repository;
 
-import static com.mongodb.client.model.Filters.and;
-import static com.mongodb.client.model.Filters.eq;
-
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoCollection;
 import de.karimbkb.wishlistgraphqlapi.dto.Customer;
 import de.karimbkb.wishlistgraphqlapi.dto.Wishlist;
-import de.karimbkb.wishlistgraphqlapi.dto.WishlistProduct;
 import io.micronaut.context.annotation.Prototype;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Locale;
-import java.util.Objects;
 import javax.inject.Inject;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.bson.Document;
 
 @RequiredArgsConstructor
 @Prototype
 public class WishlistRepository {
   private MongoClient mongoClient;
-  private WishlistProductRepository wishlistProductRepository;
 
   @Inject
-  public WishlistRepository(
-      MongoClient mongoClient, WishlistProductRepository wishlistProductRepository) {
+  public WishlistRepository(MongoClient mongoClient) {
     this.mongoClient = mongoClient;
-    this.wishlistProductRepository = wishlistProductRepository;
   }
 
   public Wishlist loadWishlist(@Valid Customer customer, Locale locale) {
-    //    DBObject lookupOperation = new BasicDBObject(
-    //            "$lookup", new BasicDBObject("from", "places")
-    //            .append("localField", "address.location.place._id")
-    //            .append("foreignField", "_id")
-    //            .append("as", "address.location.place")
-    //    );
-    //
-    //    Aggregation agg = newAggregation(
-    //            unwind("address"),
-    //            unwind("address.location"),
-    //            lookupOperation
-    //    );
-    //
-    //    AggregationResults<OutputDocument> aggResults = mongoTemplate.aggregate(
-    //            agg, PersonAddressDocument.class, OutputDocument.class
-    //    );
-
-    Wishlist wishlist =
-        getWishlistCollection()
-            .find(and(eq("customerId", customer.getId()), eq("locale", locale.toLanguageTag())))
-            .limit(1)
-            .first();
-
-    if (Objects.isNull(wishlist)) {
-      return null;
-    }
-
-    List<WishlistProduct> products = new ArrayList<>();
-    wishlistProductRepository.loadProducts(wishlist).forEach(products::add);
-
-    wishlist.setProducts(products);
-
-    return wishlist;
+    return getWishlistCollection()
+        .aggregate(
+            Arrays.asList(
+                new Document(
+                    "$lookup",
+                    new Document("from", "wishlistProduct")
+                        .append("let", new Document("wId", "$_id"))
+                        .append(
+                            "pipeline",
+                            Collections.singletonList(
+                                new Document(
+                                    "$match",
+                                    new Document(
+                                        "$expr",
+                                        new Document(
+                                            "$eq", Arrays.asList("$wishlistId", "$$wId"))))))
+                        .append("as", "products")),
+                new Document(
+                    "$match",
+                    new Document(
+                        "$expr",
+                        new Document(
+                            "$and",
+                            Arrays.asList(
+                                new Document("$eq", Arrays.asList("$customerId", customer.getId())),
+                                new Document(
+                                    "$eq", Arrays.asList("$locale", locale.toLanguageTag()))))))))
+        .first();
   }
 
   public void saveWishlist(@Valid Wishlist wishlist) {
