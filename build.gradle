@@ -1,3 +1,5 @@
+import com.github.spotbugs.snom.SpotBugsReport
+
 buildscript {
     repositories {
         maven {
@@ -5,6 +7,18 @@ buildscript {
         }
     }
     dependencies {
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.5.0"
+    }
+}
+
+buildscript {
+    repositories {
+        maven {
+            url "https://plugins.gradle.org/m2/"
+        }
+    }
+    dependencies {
+        classpath "gradle.plugin.com.github.spotbugs.snom:spotbugs-gradle-plugin:4.5.0"
         classpath "com.github.jengelman.gradle.plugins:shadow:6.1.0"
     }
 }
@@ -16,6 +30,7 @@ plugins {
     id 'com.github.sherter.google-java-format' version '0.9'
     id "io.spring.dependency-management" version "1.0.10.RELEASE"
     id "com.github.johnrengelman.shadow" version "6.1.0"
+    id "com.github.spotbugs" version "4.5.0"
 }
 
 sourceCompatibility = JavaVersion.VERSION_11
@@ -83,6 +98,21 @@ test.classpath += configurations.developmentOnly
 application {
     mainClassName = 'de.karimbkb.wishlistgraphqlapi.Application'
 }
+
+apply plugin: "com.github.spotbugs"
+spotbugsTest.enabled = false
+
+spotbugsMain {
+    reports(({
+        xml.enabled = false
+        html.enabled = true
+    } as Closure<NamedDomainObjectContainer<? extends SpotBugsReport>>))
+}
+
+spotbugs {
+    excludeFilter = file("spotbugs-exclude.xml")
+}
+
 
 // use JUnit 5 platform
 test {

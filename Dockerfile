@@ -1,7 +1,7 @@
 FROM gradle:6.6-jdk11 as builder
 COPY --chown=gradle:gradle . /home/gradle/src
 WORKDIR /home/gradle/src
-RUN gradle build
+RUN gradle build -x test -i
 
 FROM adoptopenjdk/openjdk11-openj9:alpine-slim
 RUN mkdir /opt/app

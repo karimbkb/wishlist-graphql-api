@@ -37,7 +37,7 @@ class FetchProductsMutationTest extends Mocks implements TestPropertyProvider {
 
   @ClassRule
   public static GenericContainer<?> mongoDBContainer =
-      new GenericContainer<>("mongo:latest")
+      new GenericContainer<>("mongo:4.4.5")
           .withReuse(true)
           .withCopyFileToContainer(
               MountableFile.forClasspathResource("init-mongo.js"),
@@ -50,7 +50,7 @@ class FetchProductsMutationTest extends Mocks implements TestPropertyProvider {
   }
 
   @BeforeAll
-  void populateWishlistData() throws InterruptedException {
+  void populateWishlistData() {
     Product product = loadProductMock();
     addProductToWishlist.execute(
         product, "8e5ef1ec-d115-49af-b431-85da02ff3ee6", Locale.forLanguageTag("pl-PL"));

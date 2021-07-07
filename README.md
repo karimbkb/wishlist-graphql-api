@@ -1,10 +1,10 @@
-# Wishlist Api Function
+# Wishlist Api 
 >  This app is responsible for the wishlist crud operations 
 
 [![codecov](https://codecov.io/gh/karimbkb/wishlist-graphql-api/branch/master/graph/badge.svg?token=tprxgsRDGg)](https://codecov.io/gh/karimbkb/wishlist-graphql-api)
 [![Build Status](https://travis-ci.com/karimbkb/wishlist-graphql-api.svg?branch=master)](https://travis-ci.com/karimbkb/wishlist-graphql-api)
 [![made-with-Micronaut](https://img.shields.io/badge/Micronaut-2.3.1-1f425f.svg)](https://micronaut.io/)
-[![made-with-Commercetools](https://img.shields.io/badge/GraphQL-1.3.0-1f425f.svg)](https://commercetools.com/)
+[![made-with-GraphQL](https://img.shields.io/badge/GraphQL-1.3.0-1f425f.svg)](https://commercetools.com/)
 
 
 ## Contents
@@ -22,7 +22,7 @@
 Go into the root directory of the application and run
 
 ```
-docker-compse up -d --build
+docker-compose up -d --build
 ```
 
 After that the api can be accessed via `http://localhost:8080/graphql`
@@ -127,4 +127,8 @@ To format all java files:
 
 ## Static Code Analyzer
 
-Not used
+Spotbugs was used in this project. (https://spotbugs.github.io/)
+
+```
+./gradlew spotbugsMain
+```

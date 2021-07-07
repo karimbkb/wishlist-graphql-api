@@ -28,11 +28,6 @@ input WishlistCollectionInput {
     limit: Int!
 }
 
-input WishlistProductCountInput {
-    customerId: String!
-    locale: String!
-}
-
 type Query {
 }
 

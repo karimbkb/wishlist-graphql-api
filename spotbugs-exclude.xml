@@ -1,0 +1,8 @@
+<FindBugsFilter>
+    <Match>
+        <Or>
+            <Class name="de.karimbkb.wishlistgraphqlapi.factory.GraphQLFactory.graphQL"/>
+            <Bug pattern="DM_DEFAULT_ENCODING"/>
+        </Or>
+    </Match>
+</FindBugsFilter>

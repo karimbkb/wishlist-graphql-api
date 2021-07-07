@@ -33,8 +33,8 @@ public class FetchProducts {
         NullPointerException.class,
         CustomerNotFoundException.class
       })
-  public WishlistCollection execute(@NotNull final String customerId, @NotNull final Locale locale)
-      throws InterruptedException {
+  public WishlistCollection execute(
+      @NotNull final String customerId, @NotNull final Locale locale) {
     final Customer customer = customerApi.loadCustomer(customerId);
     final Wishlist wishlist = wishlistRepository.loadWishlist(customer, locale);
 
@@ -43,10 +43,8 @@ public class FetchProducts {
         .customerId(wishlist.getCustomerId())
         .locale(wishlist.getLocale())
         .createdAt(wishlist.getCreatedAt())
-        .items(
-            wishlist == null || wishlist.getProducts() == null ? List.of() : wishlist.getProducts())
-        .count(
-            wishlist == null || wishlist.getProducts() == null ? 0 : wishlist.getProducts().size())
+        .items(wishlist.getProducts() == null ? List.of() : wishlist.getProducts())
+        .count(wishlist.getProducts() == null ? 0 : wishlist.getProducts().size())
         .build();
   }
 }
